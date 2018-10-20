@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ad;
+use App\Form\AnnonceType;
 use App\Repository\AdRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,6 +22,20 @@ class AdController extends AbstractController
 
         return $this->render('ad/index.html.twig', [
             'ads' => $ads,
+        ]);
+    }
+
+    /**
+     * Permet de créer une annonce
+     * @Route("/ad/new", name="ads_create")
+     */
+    public function create() //mettre cette fonction avant la fonction show, car sinon pense que 'new' est un slug
+    {
+        $ad = new Ad();
+        $form = $this->createForm(AnnonceType::class, $ad);
+
+        return $this->render('ad/new.html.twig', [
+            'annonce_form' => $form->createView(),
         ]);
     }
 
