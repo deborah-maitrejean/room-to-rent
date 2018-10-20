@@ -3,7 +3,9 @@
 {% block title %}Créer une annonce{% endblock %}
 
 {% block body %}
+    {#
     {% form_theme annonce_form _self %} <!-- __self signifie dans le même fichier, car ici le thèm est défini dans le même fichier -->
+    #}
     <div class="container">
         <h1>Créer une nouvelle annonce</h1>
         {{ form_start(annonce_form) }}
@@ -13,12 +15,12 @@
     </div>
 {% endblock %}
 
-
+{#
 {% block form_row %}
-    {# dump() #} <!-- afficher l'ensemble des variables disponibles au sein de ce block -->
+    {% dump() %} <!-- afficher l'ensemble des variables disponibles au sein de ce block -->
     <div class="form-group"> <!-- pour chaque champ l'on veut une div avec la class form-group -->
         {{ form_label(form) }}
         {{ form_widget(form) }}
     </div>
 {% endblock form_row %}
-
+#}
