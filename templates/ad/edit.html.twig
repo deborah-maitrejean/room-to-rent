@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer une annonce{% endblock %}
+{% block title %}Modifier l'annonce{% endblock %}
 
 {% form_theme annonce_form 'ad/_collection.html.twig' %}
 
 {% block body %}
     <div class="container">
-        <h1>Créer une nouvelle annonce</h1>
+        <h1>Modifier l'annonce</h1>
         {{ form_start(annonce_form) }}
         {{ form_widget(annonce_form) }} <!-- affiche un champ ou un groupe de champs, permet d'ajouter du code personnalisé ensuite
         appelle form_row pour chaque champ. -->
