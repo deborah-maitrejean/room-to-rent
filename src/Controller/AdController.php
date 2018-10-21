@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ad;
+use App\Entity\Image;
 use App\Form\AnnonceType;
 use App\Repository\AdRepository;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -42,11 +43,21 @@ class AdController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($ad->getImages() as $image) {
+                $image->setAd($ad);
+                $manager->persist($image);
+            }
+
             $manager->persist($ad);
             $manager->flush();
 
+            $this->addFlash(
+                'success',
+                'Votre annonce <strong>test</strong> a été publiée !'
+            );
+
             return $this->redirectToRoute('ad_show', [
-                'slug' => $ad->getSlug(), // redicrection vers la page de l'annonce que l'on vient de créer
+                'slug' => $ad->getSlug(), // redirection vers la page de l'annonce que l'on vient de créer
             ]);
         }
 
@@ -65,6 +76,41 @@ class AdController extends AbstractController
     {
         // récupère l'annonce qui correspond au slug passé en paramètre
         return $this->render('ad/show.html.twig', [
+            'ad' => $ad,
+        ]);
+    }
+
+    /**
+     * Permet d'afficher le formulaire d'édition
+     * @Route("/ad/{slug}/edit", name="ad_edit")
+     * @param Ad $ad
+     * @param Request $request
+     * @param ObjectManager $manager
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function edit(Ad $ad,Request $request, ObjectManager $manager)
+    {
+        // paramconverter : convertit un paramètre (slug par ex) en entité (ici Ad)
+        $form = $this->createForm(AnnonceType::class, $ad);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($ad->getImages() as $image) {
+                $image->setAd($ad);
+                $manager->persist($image);
+            }
+
+            $manager->persist($ad);
+            $manager->flush();
+
+            $this->addFlash(
+                'success',
+                "Les modifications de l'annonce <strong>{$ad->getTitle()}</strong> ont été enregistrées."
+            );
+        }
+
+        return $this->render('ad/edit.html.twig',[
+            'annonce_form' => $form->createView(),
             'ad' => $ad,
         ]);
     }
