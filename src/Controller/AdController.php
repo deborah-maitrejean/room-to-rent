@@ -45,6 +45,11 @@ class AdController extends AbstractController
             $manager->persist($ad);
             $manager->flush();
 
+            $this->addFlash(
+                'success',
+                'Votre annonce <strong>test</strong> a été publiée !'
+            );
+
             return $this->redirectToRoute('ad_show', [
                 'slug' => $ad->getSlug(), // redicrection vers la page de l'annonce que l'on vient de créer
             ]);
