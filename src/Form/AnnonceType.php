@@ -34,20 +34,33 @@ class AnnonceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class, $this->getconfiguration("Titre", "Tapez le titre de l'annonce"))
-            ->add('slug', TextType::class, $this->getconfiguration("Chaîne URL", "Adresse Web (automatique)"))
-            ->add('coverImage', UrlType::class, $this->getconfiguration("URL de l'image principale", "Donnez l'adresse d'une image"))
-            ->add('introduction', TextType::class, $this->getconfiguration("Introduction", "Donnez une description globale"))
-            ->add('content', TextareaType::class, $this->getconfiguration("Contenu", "Description détaillée"))
-            ->add('price', MoneyType::class, $this->getconfiguration("Prix par nuit", "Indiquez le prix"))
-            ->add('rooms',IntegerType::class, $this->getconfiguration("Nombre de chambres", "Nombre de chambres disponibles"))
+            ->add('title', TextType::class,
+                $this->getconfiguration("Titre", "Tapez le titre de l'annonce")
+            )
+            ->add('slug', TextType::class,
+                $this->getconfiguration("Chaîne URL", "Adresse Web (automatique)")
+            )
+            ->add('coverImage', UrlType::class,
+                $this->getconfiguration("URL de l'image principale", "Donnez l'adresse d'une image")
+            )
+            ->add('introduction', TextType::class,
+                $this->getconfiguration("Introduction", "Donnez une description globale")
+            )
+            ->add('content', TextareaType::class,
+                $this->getconfiguration("Contenu", "Description détaillée")
+            )
+            ->add('price', MoneyType::class,
+                $this->getconfiguration("Prix par nuit", "Indiquez le prix")
+            )
+            ->add('rooms', IntegerType::class,
+                $this->getconfiguration("Nombre de chambres", "Nombre de chambres disponibles")
+            )
             ->add('save', SubmitType::class, [
                 'label' => 'Créer la nouvelle annonce',
                 'attr' => [
                     'class' => 'btn btn-primary',
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
