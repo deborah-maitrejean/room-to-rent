@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Ad;
 //use Cocur\Slugify\Slugify;
 use App\Entity\Image;
+use App\Entity\Role;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -23,7 +24,22 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create('FR-fr');
-        //$slugify = new Slugify();
+
+        $adminRole = new Role();
+        $adminRole->setTitle('ROLE_ADMIN');
+        $manager->persist($adminRole);
+
+        $adminUser = new User();
+        $adminUser->setFirstName('deborah')
+            ->setLastName('maitrejean')
+            ->setEmail('maitrejean.deborah@orange.fr')
+            ->setPassword($this->encoder->encodePassword($adminUser, 'password'))
+            ->setPictureUrl('https://deborah-maitrejean.com/public/img/logo/logo-blanc.png')
+            ->setIntroduction($faker->sentence())
+            ->setDescription('<p>' . join('</p><p>', $faker->paragraphs(5)) . '</p>')
+            ->addUserRole($adminRole)
+            ;
+        $manager->persist($adminUser);
 
         // nous gérons les utilisateurs
         $users = [];
@@ -50,7 +66,7 @@ class AppFixtures extends Fixture
                 ->setLastName($faker->lastName)
                 ->setEmail($faker->email)
                 ->setIntroduction($faker->sentence)
-                ->setDescription($content = '<p>' . join('</p><p>', $faker->paragraphs(5)) . '</p>')
+                ->setDescription('<p>' . join('</p><p>', $faker->paragraphs(5)) . '</p>')
                 ->setPassword($hash)
                 ->setPictureUrl($picture)
             ;
