@@ -8,6 +8,7 @@ use App\Form\AccountType;
 use App\Form\PasswordUpdateType;
 use App\Form\RegistrationType;
 use Doctrine\Common\Persistence\ObjectManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,6 +84,7 @@ class AccountController extends AbstractController
      * @param Request $request
      * @param ObjectManager $manager
      * @return \Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_USER")
      */
     public function profile(Request $request, ObjectManager $manager)
     {
@@ -116,6 +118,7 @@ class AccountController extends AbstractController
      * @param UserPasswordEncoderInterface $encoder
      * @param ObjectManager $manager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_USER")
      */
     public function updatePassword(Request $request, UserPasswordEncoderInterface $encoder, ObjectManager $manager) {
         $passwordUpdate = new PasswordUpdate();
@@ -153,11 +156,21 @@ class AccountController extends AbstractController
     /**
      * Permet d'afficher le profil de l'utilisateur connecté
      * @Route("/account", name="account_index")
+     * @IsGranted("ROLE_USER")
      */
     public function myAccount()
     {
         return $this->render('user/index.html.twig', [
             'user' => $this->getUser(),
         ]);
+    }
+
+    /**
+     * Permet d'afficher la liste des réservations faites par l'utilisateur
+     * @Route("/account/bookings", name="account_bookings")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function bookings() {
+        return$this->render('account/bookings.html.twig');
     }
 }
