@@ -6,11 +6,46 @@
 
 {% block body %}
     <div class="container">
-        <h1>Créer une nouvelle annonce</h1>
+        <h1 class="my-5">Créer une nouvelle annonce</h1>
         {{ form_start(annonce_form) }}
-        {{ form_widget(annonce_form) }} <!-- affiche un champ ou un groupe de champs, permet d'ajouter du code personnalisé ensuite
-        appelle form_row pour chaque champ. -->
-        {{ form_end(annonce_form) }} <!-- crée un jeton de sécurité CSRF -->
+
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-light">
+                    <h2>Informations générales</h2>
+                    <hr>
+                    {{ form_row(annonce_form.title) }}
+                    {{ form_row(annonce_form.slug) }}
+                    {{ form_row(annonce_form.price) }}
+                    {{ form_row(annonce_form.rooms) }}
+                </div>
+                <div class="alert alert-light">
+                    <h2>Détails de l'annonce</h2>
+                    <hr>
+                    {{ form_row(annonce_form.introduction) }}
+                    {{ form_row(annonce_form.content) }}
+                </div>
+            </div>
+            <div class="col">
+                <div class="alert alert-light">
+                    <h2>Images de l'annonce</h2>
+                    <hr>
+                    {{ form_row(annonce_form.coverImage) }}
+                    {{ form_row(annonce_form.images) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="alert alert-success clearfix">
+            <h2 class="alert-heading">Sauvegarder mon annonce</h2>
+            <p>Vous êtes sur le point de créer votre annonce, nous sommes super fier de vous !</p>
+            <button type="submit" class="btn btn-primary float-right">
+                <i class="fas fa-check"></i>
+                Créer la nouvelle annonce
+            </button>
+        </div>
+
+        {{ form_end(annonce_form) }}
     </div>
 {% endblock %}
 

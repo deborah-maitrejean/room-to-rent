@@ -1,0 +1,52 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des annonces{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="my-5">Gestion des annonces</h1>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th class="text-center">Id</th>
+            <th>Titre</th>
+            <th>Auteur</th>
+            <th class="text-center">Réservation</th>
+            <th class="text-center">Note</th>
+            <th class="text-center">Actions</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for ad in pagination.data %}
+        <tr>
+            <td class="text-center">{{ ad.id }}</td>
+            <td>{{ ad.title }}</td>
+            <td>
+                <img src="{{ ad.author.pictureUrl }}" alt="" class="avatar avatar-micro mr-2">
+                {{ ad.author.fullName }}
+            </td>
+            <td class="text-center">
+                <span class="badge badge-primary rounded">
+                    {{ ad.bookings | length }}
+                </span>
+            </td>
+            <td class="text-center">
+                <span class="badge badge-primary rounded">
+                    {{ ad.averageRatings | number_format(1, ',', ' ') }}
+                </span>
+            </td>
+            <td class="text-center">
+                <a href="{{ path('admin_ad_edit', {'id': ad.id}) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                <a href="{{ path('admin_ad_delete', {'id': ad.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# au lieu de mettre l'include #}
+    {{ pagination.display }}
+</div>
+{% endblock %}
