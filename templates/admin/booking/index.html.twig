@@ -19,7 +19,7 @@
             </thead>
 
             <tbody>
-            {% for booking in bookings %}
+            {% for booking in pagination.data %}
                 <tr>
                     <td class="text-center">{{ booking.id }}</td>
                     <td>{{ booking.createdAt | date('d/m/Y H:i') }}</td>
@@ -41,5 +41,8 @@
             {% endfor %}
             </tbody>
         </table>
+
+        {# au lieu de mettre l'include #}
+        {{ pagination.display }}
     </div>
 {% endblock %}

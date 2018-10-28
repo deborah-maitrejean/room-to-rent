@@ -20,7 +20,7 @@
             </thead>
 
             <tbody>
-            {% for comment in comments %}
+            {% for comment in pagination.data %}
                 <tr>
                     <td class="text-center">{{ comment.id }}</td>
                     <td>{{ comment.createdAt | date('d/m/Y') }} à {{ comment.createdAt | date('H:i')  }}</td>
@@ -47,5 +47,8 @@
             {% endfor %}
             </tbody>
         </table>
+
+        {# au lieu de mettre l'include #}
+        {{ pagination.display }}
     </div>
 {% endblock %}

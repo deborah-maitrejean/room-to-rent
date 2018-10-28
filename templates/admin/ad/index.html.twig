@@ -19,7 +19,7 @@
         </thead>
 
         <tbody>
-        {% for ad in ads %}
+        {% for ad in pagination.data %}
         <tr>
             <td class="text-center">{{ ad.id }}</td>
             <td>{{ ad.title }}</td>
@@ -45,5 +45,8 @@
         {% endfor %}
         </tbody>
     </table>
+
+    {# au lieu de mettre l'include #}
+    {{ pagination.display }}
 </div>
 {% endblock %}
